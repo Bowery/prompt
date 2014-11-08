@@ -9,7 +9,7 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
-func GetPassHash() ([]byte, error) {
+func ExamplePassword() ([]byte, error) {
 	clear, err := prompt.Password("Password")
 	if err != nil {
 		return nil, err
@@ -18,7 +18,7 @@ func GetPassHash() ([]byte, error) {
 	return bcrypt.GenerateFromPassword(clear, bcrypt.DefaultCost)
 }
 
-func GetEmail() (string, error) {
+func ExamplePrompt() (string, error) {
 	email, err := prompt.Prompt("Email")
 	if err != nil {
 		return "", err
