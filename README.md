@@ -24,8 +24,6 @@ for more info and for API details.
 
 Make sure Go is setup and running the latest release version, and make sure your `GOPATH` is setup properly.
 
-Run `git clone https://github.com/Bowery/prompt.git ${GOPATH}/src/github.com/Bowery/prompt`
-
 Follow the guidelines [here](https://guides.github.com/activities/contributing-to-open-source/#contributing).
 
 Please be sure to `gofmt` any code before doing commits. You can simply run `gofmt -w .` to format all the code in the directory.

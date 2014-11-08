@@ -10,20 +10,21 @@
 // will have the TERM environment variable set to either "dumb" or "cons25".
 //
 // The keyboard shortcuts are similar to those found in the Readline library:
-// - Enter / CTRL+D
-//   - End the line.
-// - CTRL+C
-//   - End the line, return error `ErrCTRLC`.
-// - Backspace
-//   - Remove the character to the left.
-// - CTRL+L
-//   - Clear the screen(keeping the current lines content).
-// - Home / End
-//   - Jump to the beginning/end of the line.
-// - Left arrow / Right arrow
-//   - Move left/right one character.
-// - Delete
-//   - Remove the character to the right.
+//
+//   - Enter / CTRL+D
+//     - End the line.
+//   - CTRL+C
+//     - End the line, return error `ErrCTRLC`.
+//   - Backspace
+//     - Remove the character to the left.
+//   - CTRL+L
+//     - Clear the screen(keeping the current lines content).
+//   - Home / End
+//     - Jump to the beginning/end of the line.
+//   - Left arrow / Right arrow
+//     - Move left/right one character.
+//   - Delete
+//     - Remove the character to the right.
 package prompt
 
 import (
