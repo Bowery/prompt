@@ -105,6 +105,8 @@ func (buf *Buffer) ClsScreen() error {
 }
 
 // delLine deletes the line the csbi cursor is positioned on.
+// TODO: Possible refresh jittering reason, instead we should copy the Unix
+// code and write over contents and then remove everything to the right.
 func (buf *Buffer) delLine(csbi *consoleScreenBufferInfo) error {
 	var written uint32
 	coords := &coord{x: 0, y: csbi.cursorPosition.y}

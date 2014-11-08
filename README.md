@@ -13,7 +13,8 @@ for more info and for API details.
 - ANSI conversion for Windows
 
 ## Todo
-- Make refresh less jittery on Windows
+- Multi-line prompt as a Terminal option
+- Make refresh less jittery on Windows([possible reason](https://github.com/Bowery/prompt/blob/master/output_windows.go#L108))
 - Add support for BSD systems
 - Multi-byte character support on Windows
 - `AnsiWriter` should execute the equivalent ANSI escape code functionality on Windows
