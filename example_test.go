@@ -18,8 +18,8 @@ func ExamplePassword() ([]byte, error) {
 	return bcrypt.GenerateFromPassword(clear, bcrypt.DefaultCost)
 }
 
-func ExamplePrompt() (string, error) {
-	email, err := prompt.Prompt("Email")
+func ExampleBasic() (string, error) {
+	email, err := prompt.Basic("Email", true)
 	if err != nil {
 		return "", err
 	}
