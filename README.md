@@ -1,6 +1,8 @@
 # Prompt
 
-[GoDoc](http://godoc.org/github.com/Bowery/prompt)
+[![Circle CI](https://circleci.com/gh/Bowery/prompt/tree/master.png?style=badge)](https://circleci.com/gh/Bowery/prompt/tree/master)
+
+![GoDoc](https://godoc.org/github.com/Bowery/prompt?status.png)
 
 Prompt is a cross platform line-editing prompting library. Read the GoDoc page
 for more info and for API details.
