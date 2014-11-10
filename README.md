@@ -18,6 +18,7 @@ for more info and for API details.
 - Multi-line prompt as a Terminal option
 - Make refresh less jittery on Windows([possible reason](https://github.com/Bowery/prompt/blob/master/output_windows.go#L108))
 - Add support for BSD systems
+- Add history functionality
 - Multi-byte character support on Windows
 - `AnsiWriter` should execute the equivalent ANSI escape code functionality on Windows
 - Support for more ANSI escape codes on Windows.
