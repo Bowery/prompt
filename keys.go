@@ -6,11 +6,9 @@ package prompt
 var crlf = []byte("\r\n")
 
 const (
-	tabKey    = '\t'
-	backKey   = '\u007f'
-	returnKey = '\r'
-	escKey    = '\u001B'
-	spaceKey  = '\u0020'
+	backKey  = '\u007f'
+	escKey   = '\u001B'
+	spaceKey = '\u0020'
 )
 
 const (
@@ -22,11 +20,11 @@ const (
 	ctrlF
 	ctrlG
 	ctrlH
-	_ // Same as tabKey.
+	tabKey
 	ctrlJ
 	ctrlK
 	ctrlL
-	_ // Same as returnKey.
+	returnKey
 	ctrlN
 	ctrlO
 	ctrlP
