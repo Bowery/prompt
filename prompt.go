@@ -92,7 +92,7 @@ func Custom(prefix string, test func(string) (string, bool)) (string, error) {
 	defer term.Close()
 
 	for !ok {
-		input, err = term.Prompt(prefix + ": ")
+		input, err = term.Prompt(prefix)
 		if err != nil && err != io.EOF {
 			return "", err
 		}
@@ -115,7 +115,7 @@ func Password(prefix string) (string, error) {
 	defer term.Close()
 
 	for input == "" {
-		input, err = term.Password(prefix + ": ")
+		input, err = term.Password(prefix)
 		if err != nil && err != io.EOF {
 			return "", err
 		}
