@@ -32,10 +32,6 @@ import (
 	"strings"
 )
 
-var (
-	prefixSeparator string = `: `
-)
-
 // Basic gets input and if required tests to ensure input was given.
 func Basic(prefix string, required bool) (string, error) {
 	return Custom(prefix, func(input string) (string, bool) {
@@ -96,7 +92,7 @@ func Custom(prefix string, test func(string) (string, bool)) (string, error) {
 	defer term.Close()
 
 	for !ok {
-		input, err = term.Prompt(prefix + prefixSeparator)
+		input, err = term.Prompt(prefix)
 		if err != nil && err != io.EOF {
 			return "", err
 		}
@@ -119,17 +115,11 @@ func Password(prefix string) (string, error) {
 	defer term.Close()
 
 	for input == "" {
-		input, err = term.Password(prefix + prefixSeparator)
+		input, err = term.Password(prefix)
 		if err != nil && err != io.EOF {
 			return "", err
 		}
 	}
 
 	return input, nil
-}
-
-//OverrideSeparator is used to modify the separator injected into a prompt when a prefix is used
-func OverrideSeparator(separator string) error {
-	prefixSeparator = separator
-	return nil
 }
