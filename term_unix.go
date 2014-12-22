@@ -56,10 +56,8 @@ func IsNotTerminal(err error) bool {
 	return false
 }
 
-// Terminal contains the state for raw terminal input.
-type Terminal struct {
-	In           *os.File
-	Out          *os.File
+// terminal contains the private fields for a Unix terminal.
+type terminal struct {
 	supported    bool
 	simpleReader *bufio.Reader
 	origMode     syscall.Termios
@@ -67,7 +65,11 @@ type Terminal struct {
 
 // NewTerminal creates a terminal and sets it to raw input mode.
 func NewTerminal() (*Terminal, error) {
-	term := &Terminal{In: os.Stdin, Out: os.Stdout}
+	term := &Terminal{
+		In:       os.Stdin,
+		Out:      os.Stdout,
+		terminal: new(terminal),
+	}
 	if !supportedTerminal() {
 		return term, nil
 	}
@@ -110,8 +112,8 @@ func NewTerminal() (*Terminal, error) {
 	return term, nil
 }
 
-// Prompt gets a line with the prefix and echos input.
-func (term *Terminal) Prompt(prefix string) (string, error) {
+// GetPrompt gets a line with the prefix and echos input.
+func (term *Terminal) GetPrompt(prefix string) (string, error) {
 	if !term.supported {
 		return term.simplePrompt(prefix)
 	}
@@ -120,8 +122,8 @@ func (term *Terminal) Prompt(prefix string) (string, error) {
 	return term.prompt(buf, term.In)
 }
 
-// Password gets a line with the prefix and doesn't echo input.
-func (term *Terminal) Password(prefix string) (string, error) {
+// GetPassword gets a line with the prefix and doesn't echo input.
+func (term *Terminal) GetPassword(prefix string) (string, error) {
 	if !term.supported {
 		return term.simplePrompt(prefix)
 	}

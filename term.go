@@ -6,6 +6,7 @@ import (
 	"bufio"
 	"errors"
 	"io"
+	"os"
 	"strings"
 )
 
@@ -26,6 +27,93 @@ const (
 	evLeft
 	evDel
 )
+
+// Terminal contains the state for raw terminal input.
+type Terminal struct {
+	In  *os.File
+	Out *os.File
+	*terminal
+}
+
+// Basic gets input and if required tests to ensure input was given.
+func (term *Terminal) Basic(prefix string, required bool) (string, error) {
+	return term.Custom(prefix, func(input string) (string, bool) {
+		if required && input == "" {
+			return "", false
+		}
+
+		return input, true
+	})
+}
+
+// BasicDefault gets input and if empty uses the given default.
+func (term *Terminal) BasicDefault(prefix, def string) (string, error) {
+	return term.Custom(prefix+"(Default: "+def+")", func(input string) (string, bool) {
+		if input == "" {
+			input = def
+		}
+
+		return input, true
+	})
+}
+
+// Ask gets input and checks if it's truthy or not, and returns that
+// in a boolean fashion.
+func (term *Terminal) Ask(question string) (bool, error) {
+	input, err := term.Custom(question+"?(y/n)", func(input string) (string, bool) {
+		if input == "" {
+			return "", false
+		}
+		input = strings.ToLower(input)
+
+		if input == "y" || input == "yes" {
+			return "yes", true
+		}
+
+		return "", true
+	})
+
+	ok := false
+	if input != "" {
+		ok = true
+	}
+
+	return ok, err
+}
+
+// Custom gets input and calls the given test function with the input to
+// check if the input is valid, a true return will return the string.
+func (term *Terminal) Custom(prefix string, test func(string) (string, bool)) (string, error) {
+	var err error
+	input := ""
+	ok := false
+
+	for !ok {
+		input, err = term.GetPrompt(prefix)
+		if err != nil && err != io.EOF {
+			return "", err
+		}
+
+		input, ok = test(input)
+	}
+
+	return input, nil
+}
+
+// Password retrieves a password from stdin without echoing it.
+func (term *Terminal) Password(prefix string) (string, error) {
+	var err error
+	input := ""
+
+	for input == "" {
+		input, err = term.GetPassword(prefix)
+		if err != nil && err != io.EOF {
+			return "", err
+		}
+	}
+
+	return input, nil
+}
 
 // simplePrompt is a fallback prompt without line editing support.
 func (term *Terminal) simplePrompt(prefix string) (string, error) {
