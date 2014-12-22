@@ -23,6 +23,8 @@ const (
 	evClear
 	evHome
 	evEnd
+	evUp
+	evDown
 	evRight
 	evLeft
 	evDel
@@ -30,8 +32,10 @@ const (
 
 // Terminal contains the state for raw terminal input.
 type Terminal struct {
-	In  *os.File
-	Out *os.File
+	In      *os.File
+	Out     *os.File
+	History []string
+	histIdx int
 	*terminal
 }
 
@@ -199,9 +203,12 @@ func (term *Terminal) read(in *bufio.Reader) (int, rune, error) {
 		// Arrows, delete, pgup, pgdown, insert.
 		if esc[0] == '[' {
 			switch esc[1] {
-			case 'A', 'B':
-				// Up, down.
-				return evSkip, char, nil
+			case 'A':
+				// Up.
+				return evUp, char, nil
+			case 'B':
+				// Down.
+				return evDown, char, nil
 			case 'C':
 				// Right.
 				return evRight, char, nil
@@ -241,6 +248,9 @@ func (term *Terminal) prompt(buf *Buffer, in io.Reader) (string, error) {
 	if err != nil {
 		return "", err
 	}
+	term.History = append(term.History, "")
+	term.histIdx = len(term.History) - 1
+	curHistIdx := term.histIdx
 
 	for {
 		typ, char, err := term.read(input)
@@ -254,6 +264,7 @@ func (term *Terminal) prompt(buf *Buffer, in io.Reader) (string, error) {
 			if err != nil {
 				return buf.String(), err
 			}
+			term.History[curHistIdx] = buf.String()
 		case evSkip:
 			continue
 		case evReturn:
@@ -271,6 +282,7 @@ func (term *Terminal) prompt(buf *Buffer, in io.Reader) (string, error) {
 			if err != nil {
 				return buf.String(), err
 			}
+			term.History[curHistIdx] = buf.String()
 		case evClear:
 			err = buf.ClsScreen()
 			if err != nil {
@@ -286,6 +298,28 @@ func (term *Terminal) prompt(buf *Buffer, in io.Reader) (string, error) {
 			if err != nil {
 				return buf.String(), err
 			}
+		case evUp:
+			idx := term.histIdx
+			if term.histIdx > 0 {
+				idx--
+			}
+
+			err := buf.Set([]rune(term.History[idx])...)
+			if err != nil {
+				return buf.String(), err
+			}
+			term.histIdx = idx
+		case evDown:
+			idx := term.histIdx
+			if term.histIdx < len(term.History)-1 {
+				idx++
+			}
+
+			err := buf.Set([]rune(term.History[idx])...)
+			if err != nil {
+				return buf.String(), err
+			}
+			term.histIdx = idx
 		case evRight:
 			err = buf.Right()
 			if err != nil {
@@ -301,6 +335,7 @@ func (term *Terminal) prompt(buf *Buffer, in io.Reader) (string, error) {
 			if err != nil {
 				return buf.String(), err
 			}
+			term.History[curHistIdx] = buf.String()
 		}
 	}
 }
@@ -324,7 +359,7 @@ func (term *Terminal) password(buf *Buffer, in io.Reader) (string, error) {
 			if err != nil {
 				return buf.String(), err
 			}
-		case evSkip, evHome, evEnd, evRight, evLeft, evDel:
+		case evSkip, evHome, evEnd, evUp, evDown, evRight, evLeft, evDel:
 			continue
 		case evReturn:
 			err = buf.EndLine()

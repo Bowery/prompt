@@ -21,6 +21,8 @@
 //     - Clear the screen(keeping the current lines content).
 //   - Home / End
 //     - Jump to the beginning/end of the line.
+//   - Up arrow / Down arrow
+//     - Go back and forward in the history.
 //   - Left arrow / Right arrow
 //     - Move left/right one character.
 //   - Delete

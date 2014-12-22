@@ -68,6 +68,8 @@ func NewTerminal() (*Terminal, error) {
 	term := &Terminal{
 		In:       os.Stdin,
 		Out:      os.Stdout,
+		History:  make([]string, 0, 10),
+		histIdx:  -1,
 		terminal: new(terminal),
 	}
 	if !supportedTerminal() {

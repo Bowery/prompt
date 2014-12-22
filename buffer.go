@@ -69,6 +69,16 @@ func (buf *Buffer) Insert(rs ...rune) error {
 	return buf.Refresh()
 }
 
+// Set sets the content in the buffer.
+func (buf *Buffer) Set(rs ...rune) error {
+	rsLen := len(rs)
+	buf.data = rs
+	buf.pos = rsLen
+	buf.size = rsLen
+
+	return buf.Refresh()
+}
+
 // Start moves the cursor to the start.
 func (buf *Buffer) Start() error {
 	if buf.pos <= 0 {
