@@ -1,9 +1,7 @@
 package prompt_test
 
 import (
-	"flag"
 	"net/mail"
-	"os"
 
 	"github.com/Bowery/prompt"
 	"golang.org/x/crypto/bcrypt"
@@ -15,7 +13,7 @@ func ExamplePassword() ([]byte, error) {
 		return nil, err
 	}
 
-	return bcrypt.GenerateFromPassword(clear, bcrypt.DefaultCost)
+	return bcrypt.GenerateFromPassword([]byte(clear), bcrypt.DefaultCost)
 }
 
 func ExampleBasic() (string, error) {
