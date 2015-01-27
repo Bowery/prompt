@@ -12,12 +12,14 @@ import (
 
 var (
 	ErrCTRLC = errors.New("Interrupted (CTRL+C)")
+	ErrEOF   = errors.New("EOF (CTRL+D)")
 )
 
 const (
 	evChar = iota
 	evSkip
 	evReturn
+	evEOF
 	evCtrlC
 	evBack
 	evClear
@@ -166,9 +168,12 @@ func (term *Terminal) read(in *bufio.Reader) (int, rune, error) {
 		ctrlY, ctrlZ:
 		// Skip.
 		return evSkip, char, nil
-	case returnKey, ctrlD:
+	case returnKey:
 		// End of line.
 		return evReturn, char, nil
+	case ctrlD:
+		// End of file.
+		return evEOF, char, nil
 	case ctrlC:
 		// End of line, interrupted.
 		return evCtrlC, char, nil
@@ -270,6 +275,13 @@ func (term *Terminal) prompt(buf *Buffer, in io.Reader) (string, error) {
 		case evReturn:
 			err = buf.EndLine()
 			return buf.String(), err
+		case evEOF:
+			err = buf.EndLine()
+			if err == nil {
+				err = ErrEOF
+			}
+
+			return buf.String(), err
 		case evCtrlC:
 			err = buf.EndLine()
 			if err == nil {
@@ -363,6 +375,13 @@ func (term *Terminal) password(buf *Buffer, in io.Reader) (string, error) {
 			continue
 		case evReturn:
 			err = buf.EndLine()
+			return buf.String(), err
+		case evEOF:
+			err = buf.EndLine()
+			if err == nil {
+				err = ErrEOF
+			}
+
 			return buf.String(), err
 		case evCtrlC:
 			err = buf.EndLine()
