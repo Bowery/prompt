@@ -18,8 +18,8 @@ var (
 const (
 	evChar = iota
 	evSkip
-	evEOF
 	evReturn
+	evEOF
 	evCtrlC
 	evBack
 	evClear
@@ -172,6 +172,7 @@ func (term *Terminal) read(in *bufio.Reader) (int, rune, error) {
 		// End of line.
 		return evReturn, char, nil
 	case ctrlD:
+		// End of file.
 		return evEOF, char, nil
 	case ctrlC:
 		// End of line, interrupted.
