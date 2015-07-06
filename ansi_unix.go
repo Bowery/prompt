@@ -1,4 +1,4 @@
-// +build linux darwin
+// +build linux darwin freebsd
 
 // Copyright 2013-2014 Bowery, Inc.
 
