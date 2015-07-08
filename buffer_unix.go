@@ -1,6 +1,6 @@
 // +build linux darwin freebsd
 
-// Copyright 2013-2014 Bowery, Inc.
+// Copyright 2013-2015 Bowery, Inc.
 
 package prompt
 
