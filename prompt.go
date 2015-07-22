@@ -1,4 +1,4 @@
-// Copyright 2013-2014 Bowery, Inc.
+// Copyright 2013-2015 Bowery, Inc.
 
 // Package prompt implements a cross platform line-editing prompt. It also
 // provides routines to use ANSI escape sequences across platforms for
