@@ -1,7 +1,6 @@
 // +build linux darwin freebsd openbsd netbsd dragonfly solaris
 
 // Copyright 2013-2015 Bowery, Inc.
-// Copyright 2017 Attila Fülöp <attila@fueloep.org>
 
 package prompt
 

@@ -1,6 +1,6 @@
 // +build solaris
 
-// Copyright 2017 Attila Fülöp <attila@fueloep.org>
+// Copyright 2017 Bowery, Inc.
 
 package prompt
 
