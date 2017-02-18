@@ -27,11 +27,7 @@ func supportedTerminal() bool {
 
 // IsNotTerminal checks if an error is related to io not being a terminal.
 func IsNotTerminal(err error) bool {
-	if err == syscall.ENOTTY {
-		return true
-	}
-
-	return false
+	return err == syscall.ENOTTY
 }
 
 // terminal contains the private fields for a Unix terminal.

@@ -37,10 +37,9 @@ func setTermios(fd uintptr, req uintptr, termios *Termios) error {
 
 // winsize contains the size for the terminal.
 type winsize struct {
-	rows   uint16
-	cols   uint16
-	xpixel uint16
-	ypixel uint16
+	rows uint16
+	cols uint16
+	_    uint32
 }
 
 // TerminalSize retrieves the cols/rows for the terminal connected to out.

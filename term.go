@@ -11,8 +11,10 @@ import (
 )
 
 var (
+	// ErrCTRLC is returned when CTRL+C is pressed stopping the prompt.
 	ErrCTRLC = errors.New("Interrupted (CTRL+C)")
-	ErrEOF   = errors.New("EOF (CTRL+D)")
+	// ErrEOF is returned when CTRL+D is pressed stopping the prompt.
+	ErrEOF = errors.New("EOF (CTRL+D)")
 )
 
 const (
@@ -127,7 +129,11 @@ func (term *Terminal) simplePrompt(prefix string) (string, error) {
 		term.simpleReader = bufio.NewReader(term.In)
 	}
 
-	term.Out.Write([]byte(prefix))
+	_, err := term.Out.Write([]byte(prefix))
+	if err != nil {
+		return "", err
+	}
+
 	line, err := term.simpleReader.ReadString('\n')
 	line = strings.TrimRight(line, "\r\n ")
 	line = strings.TrimLeft(line, " ")
@@ -316,7 +322,7 @@ func (term *Terminal) prompt(buf *Buffer, in io.Reader) (string, error) {
 				idx--
 			}
 
-			err := buf.Set([]rune(term.History[idx])...)
+			err = buf.Set([]rune(term.History[idx])...)
 			if err != nil {
 				return buf.String(), err
 			}
@@ -327,7 +333,7 @@ func (term *Terminal) prompt(buf *Buffer, in io.Reader) (string, error) {
 				idx++
 			}
 
-			err := buf.Set([]rune(term.History[idx])...)
+			err = buf.Set([]rune(term.History[idx])...)
 			if err != nil {
 				return buf.String(), err
 			}
