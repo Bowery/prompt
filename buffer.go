@@ -9,8 +9,8 @@ import (
 
 // toBytes converts a slice of runes to its equivalent in bytes.
 func toBytes(runes []rune) []byte {
+	var bytes []byte
 	char := make([]byte, utf8.UTFMax)
-	bytes := make([]byte, 0)
 
 	for _, r := range runes {
 		n := utf8.EncodeRune(char, r)
@@ -37,7 +37,6 @@ func NewBuffer(prompt string, out *os.File, echo bool) *Buffer {
 		Out:    out,
 		Prompt: prompt,
 		Echo:   echo,
-		data:   make([]rune, 0),
 	}
 }
 
