@@ -31,7 +31,7 @@ Follow the guidelines [here](https://guides.github.com/activities/contributing-t
 
 Please be sure to `gofmt` any code before doing commits. You can simply run `gofmt -w .` to format all the code in the directory.
 
-Lastly don't forget to add your name to [`CONTRIBUTING.md`](https://raw.githubusercontent.com/Bowery/prompt/master/CONTRIBUTING.md)
+Lastly don't forget to add your name to [`CONTRIBUTORS.md`](https://github.com/Bowery/prompt/blob/master/CONTRIBUTORS.md)
 
 ## License
 
