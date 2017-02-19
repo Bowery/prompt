@@ -7,19 +7,6 @@ import (
 	"unicode/utf8"
 )
 
-// toBytes converts a slice of runes to its equivalent in bytes.
-func toBytes(runes []rune) []byte {
-	var bytes []byte
-	char := make([]byte, utf8.UTFMax)
-
-	for _, r := range runes {
-		n := utf8.EncodeRune(char, r)
-		bytes = append(bytes, char[:n]...)
-	}
-
-	return bytes
-}
-
 // Buffer contains state for line editing and writing.
 type Buffer struct {
 	Out    *os.File
@@ -149,4 +136,17 @@ func (buf *Buffer) DelLeft() error {
 func (buf *Buffer) EndLine() error {
 	_, err := buf.Out.Write(crlf)
 	return err
+}
+
+// toBytes converts a slice of runes to its equivalent in bytes.
+func toBytes(runes []rune) []byte {
+	var bytes []byte
+	char := make([]byte, utf8.UTFMax)
+
+	for _, r := range runes {
+		n := utf8.EncodeRune(char, r)
+		bytes = append(bytes, char[:n]...)
+	}
+
+	return bytes
 }

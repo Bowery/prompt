@@ -5,11 +5,11 @@
 package prompt
 
 import (
-	"syscall"
+	"golang.org/x/sys/unix"
 )
 
 const (
-	tcgets  = syscall.TIOCGETA
-	tcsets  = syscall.TIOCSETA
-	tcsetsf = syscall.TIOCSETAF
+	tcgets  = unix.TIOCGETA
+	tcsets  = unix.TIOCSETA
+	tcsetsf = unix.TIOCSETAF
 )
