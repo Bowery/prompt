@@ -47,7 +47,8 @@ func getTermios(fd uintptr) (*unix.Termios, error) {
 // setTermios sets the termios settings for the terminal descriptor,
 // optionally flushing the buffer before setting.
 func setTermios(fd uintptr, flush bool, mode *unix.Termios) error {
-	req := tcsets
+	var req int64
+	req = tcsets
 	if flush {
 		req = tcsetsf
 	}
