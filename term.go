@@ -354,6 +354,7 @@ func (term *Terminal) prompt(buf *Buffer, in io.Reader) (string, error) {
 			continue
 		case evReturn:
 			err = buf.EndLine()
+			term.History[curHistIdx] = buf.String()
 			return buf.String(), err
 		case evEOF:
 			err = buf.EndLine()
