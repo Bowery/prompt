@@ -242,8 +242,14 @@ func (term *Terminal) read(in *bufio.Reader) (int, rune, error) {
 	default:
 		// Standard chars.
 		return evChar, char, nil
-	case tabKey, ctrlA, ctrlB, ctrlE, ctrlF, ctrlG, ctrlH, ctrlJ, ctrlK, ctrlN,
-		ctrlO, ctrlP, ctrlQ, ctrlR, ctrlS, ctrlT, ctrlU, ctrlV, ctrlW, ctrlX,
+		// Next
+	case ctrlN:
+		return evDown, char, nil
+		// Prev
+	case ctrlP:
+		return evUp, char, nil
+	case tabKey, ctrlA, ctrlB, ctrlE, ctrlF, ctrlG, ctrlH, ctrlJ, ctrlK,
+		ctrlO, ctrlQ, ctrlR, ctrlS, ctrlT, ctrlU, ctrlV, ctrlW, ctrlX,
 		ctrlY, ctrlZ:
 		// Skip.
 		return evSkip, char, nil
