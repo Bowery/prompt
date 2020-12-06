@@ -8,3 +8,4 @@
 - [sungo](https://github.com/sungo)
 - [Rohan Verma](https://github.com/rhnvrm)
 - [Clément Chigot](https://github.com/Helflym)
+- [Oleg Balunenko](https://github.com/obalunenko)
